@@ -14,8 +14,8 @@ class TrainingController extends Controller
     public function getAll()
     {
         $training = $this->service->getAllTrainings();
-
-        if($training){
+        
+        if($training->isNotEmpty()){
             return response()->json($training, 200);
         }
 

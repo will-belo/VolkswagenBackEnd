@@ -11,12 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('concessionaire_vacancies', function (Blueprint $table) {
+        Schema::create('concessionaire_training_user', function (Blueprint $table) {
             $table->id();
-            $table->integer('vacancies');
             $table->foreignId('concessionaire_id')->constrained(
                 table: 'concessionaire'
             );
+            $table->foreignId('common_user_id')->constrained(
+                table: 'common_user'
+            );
+            $table->foreignId('trainings_id')->constrained(
+                table: 'trainings'
+            );
+            $table->boolean('presence');
+            $table->timestamps();
         });
     }
 

@@ -15,10 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('live_url');
+            $table->string('cover');
             $table->longText('material');
             $table->longText('description');
-            $table->string('date');
+            $table->date('date');
             $table->string('certify');
+            $table->date('certify_date');
             $table->boolean('active');
             $table->timestamps();
         });

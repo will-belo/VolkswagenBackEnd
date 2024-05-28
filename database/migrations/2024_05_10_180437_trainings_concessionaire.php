@@ -11,17 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('trainings_format', function (Blueprint $table) {
+        Schema::create('trainings_concessionaire', function (Blueprint $table) {
             $table->id();
             $table->foreignId('training_id')->constrained(
                 table: 'trainings'
             );
-            $table->foreignId('common_user_id')->constrained(
-                table: 'common_user'
-            );
-            $table->foreignId('concessionaire_id')->nullable()->constrained(
+            $table->foreignId('concessionaire_id')->constrained(
                 table: 'concessionaire'
             );
+            $table->integer('vacancies');
         });
     }
 
