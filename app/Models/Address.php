@@ -17,4 +17,9 @@ class Address extends Model
         'cep',
         'city_id',
     ];
+
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city_id');
+    }
 }

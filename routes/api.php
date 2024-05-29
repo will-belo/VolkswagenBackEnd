@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccessController;
 use App\Http\Controllers\AutoRepairController;
+use App\Http\Controllers\ConcessionaireControler;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\ConvertBooleans;
@@ -15,5 +16,8 @@ Route::post('/signup',
     [AccessController::class, 'signup']
 )->middleware([ConvertBooleans::class, SanitizeInputs::class]);
 
-Route::post('/getInfos', [UserController::class, 'getAll'])->middleware(JwtMiddleware::class);
-Route::get('/getAllTrainings', [TrainingController::class, 'getAll'])->middleware(JwtMiddleware::class);
+Route::middleware(JwtMiddleware::class)->group(function(){
+    Route::post('/getInfos', [UserController::class, 'getAll']);
+    Route::get('/getAllTrainings', [TrainingController::class, 'getAll']);
+    Route::get('/getConcessionaireByAddress', [ConcessionaireControler::class, 'getByAddress']);
+});
