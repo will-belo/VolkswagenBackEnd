@@ -13,10 +13,10 @@ class ConcessionaireControler extends Controller
     public function getByAddress(Request $request){
         try{
             $data = $this->service->getConcessionaireByAddress($request);
+
+            return response()->json($data, 200);
         }catch(\RuntimeException $error){
             return response()->json($error->getMessage(), 400);
         }
-
-        return response()->json($data, 200);
     }
 }

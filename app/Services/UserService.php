@@ -12,9 +12,9 @@ class UserService
         protected UserRepositoryInterface $userRepo,
     ){}
     
-    public function all(Request $request)
+    public function allInfos(string $id)
     {
-        $data = $this->userRepo->find($request->id);
+        $data = $this->userRepo->find($id);
 
         return $data;
     }
