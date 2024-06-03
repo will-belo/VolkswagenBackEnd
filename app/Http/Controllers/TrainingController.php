@@ -73,7 +73,9 @@ class TrainingController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = $this->service->updateTraining($id, $request);
+
+        return $this->response($data);
     }
 
     /**

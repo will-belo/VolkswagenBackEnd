@@ -15,4 +15,20 @@ class Concessionaire extends Model
     {
         return $this->belongsTo(Address::class, 'concessionaire_address');
     }
+
+    public function trainings()
+    {
+        return $this->belongsToMany(Training::class, 'concessionaire_training_user', 'concessionaire_id', 'trainings_id');
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'concessionaire_training_user', 'concessionaire_id', 'common_user_id');
+    }
+
+    public function trainingVacancies()
+    {
+        return $this->belongsToMany(Training::class, 'trainings_concessionaire', 'concessionaire_id', 'training_id')
+            ->withPivot('vacancies');
+    }
 }

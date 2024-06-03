@@ -5,6 +5,7 @@ use App\Models\Training;
 use App\Models\TrainingUser;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
 
 class TrainingRepository
 {
@@ -13,25 +14,30 @@ class TrainingRepository
         protected TrainingUser $modelFK
     ){}
 
-    public function all(){
+    public function all()
+    {
         $data = $this->model->all();
         
         return $data;
     }
-    // RETORNAR DADOS DA OFICINA CASO SEJA PRESENCIAL OU RETORNAR SE O TREINAMENTO É ONLINE
-    public function find($id, $model){   
+
+    public function find($id)
+    {   
         try{
-            $user = $model->findOrFail($id);
+            $data = $this->model->whereHas('users', function ($query) use ($id) {
+                $query->where('common_user_id', $id);
+            })->with(['users' => function ($query){
+                $query->withPivot('id');
+            }, 'concessionaire.address.city.state'])->get();
         }catch(ModelNotFoundException){
             throw new Exception("Nenhum usuário encontrado");
         }
-
-        $data = $user->trainings;
-
+        
         return $data;
     }
 
-    public function create(int $trainingID, int $userID, int $concessionaireID = 0){
+    public function create(int $trainingID, int $userID, int $concessionaireID = 0)
+    {
         $exist = $this->modelFK->where('trainings_id', $trainingID)
             ->where('common_user_id', $userID)
             ->exists();
@@ -47,6 +53,15 @@ class TrainingRepository
             'presence' => 0,
         ]);
         
+        return $record;
+    }
+
+    public function update(int $id, Request $request)
+    {
+        $record = $this->modelFK->findOrFail($id);
+        
+        $record->update(['concessionaire_id' => $request->concessionaireId]);
+
         return $record;
     }
 }

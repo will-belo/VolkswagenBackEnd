@@ -15,7 +15,7 @@ class ConcessionaireService
     public function getConcessionaireByAddress(Request $request)
     {
         if($request->has('state') && $request->has('city')){
-            $data = $this->concessionaireRepo->getByAddress($request->query('state'), $request->query('city'));
+            $data = $this->concessionaireRepo->getByAddress($request->query('state'), $request->query('city'), $request->query('training'));
             
             if($data->isEmpty()){
                 throw new RuntimeException('Nenhuma concessionária encontrada nessa cidade');
@@ -23,6 +23,7 @@ class ConcessionaireService
 
             return $data;
         }
+
         throw new RuntimeException('Estado e cidade são necessários');
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Http\Repository\TrainingRepository;
-use App\Models\User;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -20,36 +19,34 @@ class TrainingService
 
         if($data->isNotEmpty()){
             return [
-                'data' => $data,
+                'data'   => $data,
                 'status' => 200,
             ];
         }
 
         return [
-            'data' => 'Nenhum treinamento encontrado',
+            'data'   => 'Nenhum treinamento encontrado',
             'status' => 404
         ];
     }
 
     public function getAllTrainingsById($id)
-    {
-        $userModel = new User;  
-
+    { 
         try{
-            $data = $this->trainingRepo->find($id, $userModel);
+            $data = $this->trainingRepo->find($id);
 
             if($data->isEmpty()){
                 throw new Exception("Nenhum treinamento encontrado");
             }
         }catch(\Exception $error){
             return [
-                'data' => $error->getMessage(),
+                'data'   => $error->getMessage(),
                 'status' => 404
             ];
         }
         
         return [
-            'data' => $data,
+            'data'   => $data,
             'status' => 200
         ];
     }
@@ -57,26 +54,45 @@ class TrainingService
     public function saveTrainingUser(Request $request)
     {
         try{
-            if(!empty($request->concessionaireId)){
-                $data = $this->trainingRepo->create($request->trainingId, $request->userId, $request->concessionaireId);
-            }else{
-                $data = $this->trainingRepo->create($request->trainingId, $request->userId);
-            }
+            $request->validate([
+                'concessionaireId' => 'required|string',
+                'trainingId'       => 'required|string',
+                'userId'           => 'required|string',
+            ]);
 
-            return [
-                'data' => "Cadastro realizado com sucesso!",
-                'status' => 201,
-            ];
+            $this->trainingRepo->create($request->trainingId, $request->userId, $request->concessionaireId);
         }catch(QueryException $error){
             return [
-                'data' => $error->getMessage(),
+                'data'   => $error->getMessage(),
                 'status' => 400,
             ];
         }catch(\Exception $error){
             return [
-                'data' => $error->getMessage(),
+                'data'   => $error->getMessage(),
                 'status' => 400,
             ];
         }
+
+        return [
+            'data'   => "Cadastro realizado com sucesso!",
+            'status' => 201,
+        ];
+    }
+
+    public function updateTraining(int $id, Request $request)
+    {
+        try{
+            $this->trainingRepo->update($id, $request);
+        }catch(\Exception $error){
+            return [
+                'data'   => $error->getMessage(),
+                'status' => 400
+            ];
+        }
+
+        return [
+            'data'   => "Inscrição atualizada!",
+            'status' => 201,
+        ];
     }
 }
