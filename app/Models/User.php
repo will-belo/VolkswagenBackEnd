@@ -46,4 +46,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function trainings()
+    {
+        return $this->belongsToMany(Training::class, 'concessionaire_training_user', 'common_user_id', 'trainings_id');
+    }
 }

@@ -16,9 +16,11 @@ Route::post('/signup',
     [AccessController::class, 'signup']
 )->middleware([ConvertBooleans::class, SanitizeInputs::class]);
 
-Route::get('/getAllTrainings', [TrainingController::class, 'getAll']);
+Route::get('/trainings', [TrainingController::class, 'index']);
 
 Route::middleware(JwtMiddleware::class)->group(function(){
     Route::apiResource('users', UserController::class);
+    Route::apiResource('training', TrainingController::class);
+    Route::get('/trainings/{id}', [TrainingController::class, 'exib']);
     Route::get('/getConcessionaireByAddress', [ConcessionaireControler::class, 'getByAddress']);
 });

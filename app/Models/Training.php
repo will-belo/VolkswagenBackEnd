@@ -20,4 +20,9 @@ class Training extends Model
         'date',
         'description',
     ];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'concessionaire_training_user', 'trainings_id', 'common_user_id');
+    }
 }

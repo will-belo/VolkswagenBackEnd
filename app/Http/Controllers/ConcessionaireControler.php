@@ -10,6 +10,7 @@ class ConcessionaireControler extends Controller
     public function __construct(
         protected ConcessionaireService $service
     ){}
+    
     public function getByAddress(Request $request){
         try{
             $data = $this->service->getConcessionaireByAddress($request);
