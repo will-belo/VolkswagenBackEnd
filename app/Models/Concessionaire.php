@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,6 +11,13 @@ class Concessionaire extends Model
     use HasFactory;
 
     protected $table = 'concessionaire';
+
+    protected $appends = ['vacancies'];
+
+    public function getVacanciesAttribute($value)
+    {
+        return isset($this->attributes['vacancies']) ? $this->attributes['vacancies'] : null;
+    }
 
     public function address()
     {
