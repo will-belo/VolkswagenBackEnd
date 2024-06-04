@@ -27,7 +27,7 @@ class SinglePassService
         $response = Http::asForm()->post($this->base_url.'/register', $params);
 
         if(!$response->successful()){
-            throw new RuntimeException('Erro ao gerar o login, tente novamente');
+            throw new RuntimeException($response->json());
         }
         
         return $response->object();
