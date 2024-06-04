@@ -8,7 +8,7 @@ use RuntimeException;
 class SinglePassService
 {
     public function __construct(
-        private String $base_url = 'http://singlepass/api'
+        private String $base_url = 'http://login.oficinabrasil.com.br/api'
     ){}
 
     public function verify($token)
