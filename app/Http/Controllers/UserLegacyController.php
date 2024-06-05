@@ -9,7 +9,7 @@ class UserLegacyController extends Controller
 {
     public function search(Request $request)
     {
-        $data = LegacyUser::where('CPF', $request->cpf)->get();
+        $data = LegacyUser::where('CPF', $request->cpf)->get()->first();
         
         if($data->isNotEmpty()){
             return response()->json($data);
