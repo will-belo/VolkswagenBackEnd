@@ -51,7 +51,7 @@ class AccessController extends Controller
             return response()->json($address_ID['message'], 400);
         }
 
-        $user = $this->service->createUser($request, $address_ID, $singlePassID['iD']);
+        $user = $this->service->createUser($request, $address_ID['iD'], $singlePassID['iD']);
         
         if($user['status']){
             if($request->check){
