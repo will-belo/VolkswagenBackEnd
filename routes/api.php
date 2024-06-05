@@ -5,6 +5,7 @@ use App\Http\Controllers\AutoRepairController;
 use App\Http\Controllers\ConcessionaireControler;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserLegacyController;
 use App\Http\Middleware\ConvertBooleans;
 use App\Http\Middleware\JwtMiddleware;
 use App\Http\Middleware\SanitizeInputs;
@@ -17,6 +18,8 @@ Route::post('/signup',
 )->middleware([ConvertBooleans::class, SanitizeInputs::class]);
 
 Route::get('/trainings', [TrainingController::class, 'index']);
+
+Route::post('/getByCpf', [UserLegacyController::class, 'search']);
 
 Route::middleware(JwtMiddleware::class)->group(function(){
     Route::apiResource('users', UserController::class);
