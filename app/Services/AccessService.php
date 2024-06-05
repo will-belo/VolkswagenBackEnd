@@ -137,9 +137,19 @@ class AccessService
             'number' => $request->number,
         ];
 
-        $address_ID = $this->address->addAddress($data, $city_ID);
+        try{
+            $address_ID = $this->address->addAddress($data, $city_ID);
+        }catch(\Exception $error){
+            return [
+                'status'  => false,
+                'message' => $error->getMessage()
+            ];
+        }
 
-        return $address_ID;
+        return [
+            'status'  => true,
+            'iD' => $address_ID
+        ];
     }
 
     public function singePassRequest(Request $request){
