@@ -139,10 +139,10 @@ class AccessService
 
         try{
             $address_ID = $this->address->addAddress($data, $city_ID);
-        }catch(\Exception $error){
+        }catch(QueryException $error){
             return [
                 'status'  => false,
-                'message' => $error->getMessage()
+                'message' => 'Erro ao salvar o endereço'
             ];
         }
 
