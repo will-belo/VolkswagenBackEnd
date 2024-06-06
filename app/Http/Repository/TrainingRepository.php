@@ -30,8 +30,8 @@ class TrainingRepository
                 'users' => function($query) {
                     $query->withPivot('id');
                 },
-                'concessionaires',
-                'concessionaires.address.city.state'
+                'concessionaire',
+                'concessionaire.address.city.state'
             ])
             ->get();
         }catch(ModelNotFoundException){
