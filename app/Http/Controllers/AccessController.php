@@ -14,7 +14,7 @@ class AccessController extends Controller
     public function __construct(
         protected AccessService $service
     ){}
-    
+    // Verificar se o id já existe no banco, caso exista atualizar o cadastro dele
     public function signup(Request $request)
     {
         $validateUser = $this->service->validateUser($request);
@@ -23,6 +23,12 @@ class AccessController extends Controller
             return response()->json($validateUser['message'], 400);
         }
 
+        $verifyLegacy = $this->service->verifyLegacy($request);
+
+        if(!$verifyLegacy){
+            return response()->json('Usuário já cadastrado', 400);
+        }
+        
         if($request->check){
             if($request->exist && !empty($request->auto_repair_id)){
                 $validateIfExist = $this->service->validateAutoRepairExist($request);
@@ -39,6 +45,7 @@ class AccessController extends Controller
                 }
             }
         }
+
         $singlePassID = $this->service->singePassRequest($request);
 
         if(!$singlePassID['status']){
@@ -51,7 +58,11 @@ class AccessController extends Controller
             return response()->json($address_ID['message'], 400);
         }
 
-        $user = $this->service->createUser($request, $address_ID['iD'], $singlePassID['iD']);
+        if($verifyLegacy){
+            $user = $this->service->updateUser($request, $address_ID['iD'], $singlePassID['iD']);
+        }else{
+            $user = $this->service->createUser($request, $address_ID['iD'], $singlePassID['iD']);
+        }
         
         if($user['status']){
             if($request->check){

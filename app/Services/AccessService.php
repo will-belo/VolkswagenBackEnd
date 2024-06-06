@@ -31,7 +31,7 @@ class AccessService
                 'street'   => 'required',
                 'gender'   => 'required',
                 'number'   => 'required',
-                'document' => 'required|min:11|unique:App\Models\User,document',
+                'document' => 'required|min:11', // |unique:App\Models\User,document
                 'born_at'  => 'required|date|date_format:Y-m-d|before:today|after:1900-01-01',
                 'password' => 'required|min:6',
             ];
@@ -125,6 +125,17 @@ class AccessService
         ];
     }
 
+    public function verifyLegacy(Request $request)
+    {
+        $data = $this->userRepo->search('document', $request->document);
+        
+        if($data->isNotEmpty() && $data->first()->user_login_id == null){
+            return true;
+        }
+        
+        return false;
+    }
+
     public function createAddress(Request $request)
     {
         $state_ID = $this->address->ifExistState($request->state);
@@ -178,6 +189,16 @@ class AccessService
     public function createUser(Request $request, $address_ID, $singlePassID)
     {
         $user_ID = $this->userRepo->create($request, $singlePassID, $address_ID);
+
+        return [
+            'status'  => true,
+            'iD' => $user_ID->id
+        ];
+    }
+
+    public function updateUser(Request $request, $address_ID, $singlePassID)
+    {
+        $user_ID = $this->userRepo->update($request, $singlePassID, $address_ID);
 
         return [
             'status'  => true,
