@@ -27,7 +27,7 @@ class TrainingRepository
     {   
         try{
             $data = $this->modelUser->where('id', $id)
-            ->with(['trainings', 'trainings.concessionaire'])
+            ->with('trainings')
             ->get();
         }catch(ModelNotFoundException){
             throw new Exception("Nenhum usuário encontrado");
