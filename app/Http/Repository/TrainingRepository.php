@@ -29,7 +29,7 @@ class TrainingRepository
             $data = $this->modelUser->where('id', $id)
             ->with('trainings', function($query) use ($id) {
                 $query->with('concessionaire', function($query) {
-                    $query->where('id', 'concessionaire_id');
+                    $query->where('concessionaire.id', 'concessionaire_id');
                 });
             })
             ->get();
