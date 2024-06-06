@@ -32,13 +32,14 @@ class TrainingService
 
     public function getAllTrainingsById($id)
     { 
+        dd($id);
         try{
             $data = $this->trainingRepo->find($id);
             
             if($data->isEmpty()){
                 throw new Exception("Nenhum treinamento encontrado");
             }
-        }catch(Exception $error){
+        }catch(\Exception $error){
             return [
                 'data'   => $error->getMessage(),
                 'status' => 404
