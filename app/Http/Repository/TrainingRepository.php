@@ -7,12 +7,12 @@ use App\Models\User;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TrainingRepository
 {
     public function __construct(
         protected Training $model,
-        protected User $modelUser,
         protected TrainingUser $modelFK
     ){}
 
@@ -26,16 +26,29 @@ class TrainingRepository
     public function find($id)
     {   
         try{
-            $data = $this->modelUser->where('id', $id)
-            ->whereHas('trainings', function ($query) use ($id) {
-                $query->where('common_user_id', $id);
-            })
-            ->with(['concessionaire' => function ($query) use ($id) {
-                $query->where('common_user_id', $id);
-            }, 'trainings' => function ($query) use ($id) {
-                $query->where('common_user_id', $id);
-            }])
-            ->get();
+            $data = DB::select('
+                SELECT trainings.*, 
+                    concessionaire_training_user.id AS pivot_id, 
+                    common_user.*, 
+                    concessionaire.*, 
+                    address.*, 
+                    city.*, 
+                    state.*
+                FROM trainings
+                LEFT JOIN concessionaire_training_user 
+                    ON trainings.id = concessionaire_training_user.trainings_id
+                LEFT JOIN common_user 
+                    ON common_user.id = concessionaire_training_user.common_user_id
+                LEFT JOIN concessionaire 
+                    ON concessionaire.id = concessionaire_training_user.concessionaire_id
+                LEFT JOIN address 
+                    ON concessionaire.concessionaire_address = address.id
+                LEFT JOIN city 
+                    ON address.city_id = city.id
+                LEFT JOIN state 
+                    ON city.state_id = state.id
+                WHERE common_user.id = ?'
+            , [$id]);
         }catch(ModelNotFoundException){
             throw new Exception("Nenhum usuário encontrado");
         }
