@@ -34,11 +34,11 @@ class TrainingService
     { 
         try{
             $data = $this->trainingRepo->find($id);
-dd($data);
+            
             if($data->isEmpty()){
                 throw new Exception("Nenhum treinamento encontrado");
             }
-        }catch(\Exception $error){
+        }catch(Exception $error){
             return [
                 'data'   => $error->getMessage(),
                 'status' => 404
