@@ -29,6 +29,7 @@ class TrainingController extends Controller
      */
     public function exib(string $id)
     {
+        dd($id);
         $data = $this->service->getAllTrainingsById($id);
         
         return $this->response($data);
