@@ -27,8 +27,8 @@ class TrainingRepository
     {   
         try{
             $data = $this->modelUser->where('id', $id)
-            ->with('trainings', function($query) {
-                $query->with('concessionaire');
+            ->with('trainings', function($query) use ($id) {
+                $query->with('concessionaire')->where('common_user_id', $id);
             })
             ->get();
         }catch(ModelNotFoundException){
