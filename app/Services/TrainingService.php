@@ -34,8 +34,8 @@ class TrainingService
     { 
         try{
             $data = $this->trainingRepo->find($id);
-dd($data);
-            if($data->isEmpty()){
+            
+            if(empty($data)){
                 throw new Exception("Nenhum treinamento encontrado");
             }
         }catch(\Exception $error){
