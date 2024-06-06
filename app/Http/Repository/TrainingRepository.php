@@ -27,7 +27,14 @@ class TrainingRepository
     {   
         try{
             $data = $this->modelUser->where('id', $id)
-            ->with('trainings')
+            ->whereHas('trainings', function ($query) use ($id) {
+                $query->where('common_user_id', $id);
+            })
+            ->with(['users' => function ($query) use ($id) {
+                $query->where('common_user_id', $id);
+            }, 'trainings' => function ($query) use ($id) {
+                $query->where('common_user_id', $id);
+            }])
             ->get();
         }catch(ModelNotFoundException){
             throw new Exception("Nenhum usuário encontrado");
