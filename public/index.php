@@ -2,6 +2,10 @@
 
 use Illuminate\Http\Request;
 
+// Defina o memory_limit aqui
+ini_set('memory_limit', '256M');
+
+
 define('LARAVEL_START', microtime(true));
 
 // Determine if the application is in maintenance mode...
