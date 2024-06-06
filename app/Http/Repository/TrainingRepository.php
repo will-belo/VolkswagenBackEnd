@@ -3,6 +3,7 @@ namespace App\Http\Repository;
 
 use App\Models\Training;
 use App\Models\TrainingUser;
+use App\Models\User;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -11,6 +12,7 @@ class TrainingRepository
 {
     public function __construct(
         protected Training $model,
+        protected User $modelUser,
         protected TrainingUser $modelFK
     ){}
 
@@ -24,18 +26,8 @@ class TrainingRepository
     public function find($id)
     {   
         try{
-            $data = $this->model->whereHas('users', function($query) use ($id) {
-                $query->where('common_user_id', $id);
-            })->with([
-                'users' => function($query) use ($id) {
-                    $query->where('common_user_id', $id)->withPivot('id');
-                },
-                'concessionaire' => function($query) use ($id) {
-                    $query->whereHas('users', function($userQuery) use ($id) {
-                        $userQuery->where('common_user_id', $id);
-                    })->with(['address.city.state']);
-                }
-            ])
+            $data = $this->modelUser->where('id', $id)
+            ->with('trainings')
             ->get();
         }catch(ModelNotFoundException){
             throw new Exception("Nenhum usuário encontrado");
