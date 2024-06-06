@@ -31,7 +31,9 @@ class TrainingRepository
             }, 'concessionaire.address.city.state'])->get();
         }catch(ModelNotFoundException){
             throw new Exception("Nenhum usuário encontrado");
-        }
+        }catch(\Exception $error){
+            throw new Exception($error);
+        } 
         
         return $data;
     }

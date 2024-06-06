@@ -33,7 +33,6 @@ class TrainingService
     public function getAllTrainingsById($id)
     { 
         try{
-            dd($id);
             $data = $this->trainingRepo->find($id);
 
             if($data->isEmpty()){
