@@ -27,11 +27,12 @@ class TrainingRepository
             $data = $this->model->whereHas('users', function($query) use ($id) {
                 $query->where('common_user_id', $id);
             })->with([
-                'users' => function($query) {
-                    $query->withPivot('id');
+                'users' => function($query) use ($id) {
+                    $query->where('common_user_id', $id)->withPivot('id');
                 },
-                'concessionaire',
-                'concessionaire.address.city.state'
+                'concessionaire' => function($query) {
+                    $query->with(['address.city.state']);
+                }
             ])
             ->get();
         }catch(ModelNotFoundException){
