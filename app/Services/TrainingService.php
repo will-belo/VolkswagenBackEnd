@@ -33,8 +33,9 @@ class TrainingService
     public function getAllTrainingsById($id)
     { 
         try{
-            $data = $this->trainingRepo->find($id);
             dd($id);
+            $data = $this->trainingRepo->find($id);
+
             if($data->isEmpty()){
                 throw new Exception("Nenhum treinamento encontrado");
             }
