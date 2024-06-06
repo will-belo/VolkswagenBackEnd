@@ -30,8 +30,10 @@ class TrainingRepository
                 'users' => function($query) use ($id) {
                     $query->where('common_user_id', $id)->withPivot('id');
                 },
-                'concessionaire' => function($query) {
-                    $query->with(['address.city.state']);
+                'concessionaire' => function($query) use ($id) {
+                    $query->whereHas('users', function($userQuery) use ($id) {
+                        $userQuery->where('common_user_id', $id);
+                    })->with(['address.city.state']);
                 }
             ])
             ->get();
