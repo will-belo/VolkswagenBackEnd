@@ -30,7 +30,7 @@ class TrainingRepository
             ->whereHas('trainings', function ($query) use ($id) {
                 $query->where('common_user_id', $id);
             })
-            ->with(['users' => function ($query) use ($id) {
+            ->with(['concessionaire' => function ($query) use ($id) {
                 $query->where('common_user_id', $id);
             }, 'trainings' => function ($query) use ($id) {
                 $query->where('common_user_id', $id);
