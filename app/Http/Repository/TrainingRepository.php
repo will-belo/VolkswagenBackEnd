@@ -23,6 +23,7 @@ class TrainingRepository
 
     public function find($id)
     {   
+        return 'teste';
         try{
             $data = $this->model->whereHas('users', function ($query) use ($id) {
                 $query->where('common_user_id', $id);
@@ -31,9 +32,7 @@ class TrainingRepository
             }, 'concessionaire.address.city.state'])->get();
         }catch(ModelNotFoundException){
             throw new Exception("Nenhum usuário encontrado");
-        }catch(\Exception $error){
-            throw new Exception($error);
-        } 
+        }
         
         return $data;
     }
