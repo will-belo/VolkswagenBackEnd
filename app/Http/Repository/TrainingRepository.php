@@ -26,6 +26,8 @@ class TrainingRepository
         try{
             $data = $this->model->whereHas('users', function ($query) use ($id) {
                 $query->where('common_user_id', $id);
+            })->with('users', function ($query){
+                $query->withPivot('id');
             })->get();
         }catch(ModelNotFoundException){
             throw new Exception("Nenhum usuário encontrado");
