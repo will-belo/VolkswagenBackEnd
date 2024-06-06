@@ -27,13 +27,18 @@ class TrainingRepository
     {   
         try{
             $data = DB::select('
-                SELECT trainings.*, 
+                SELECT 
+                    trainings.cover, 
+                    trainings.name, 
+                    trainings.date, 
+                    trainings.id, 
                     concessionaire_training_user.id AS pivot_id, 
-                    common_user.*, 
-                    concessionaire.*, 
-                    address.*, 
-                    city.*, 
-                    state.*
+                    concessionaire.id AS concessionaire_date, 
+                    concessionaire.fantasy_name,
+                    address.street, 
+                    address.number,
+                    city.value AS city, 
+                    state.value AS state
                 FROM trainings
                 LEFT JOIN concessionaire_training_user 
                     ON trainings.id = concessionaire_training_user.trainings_id
