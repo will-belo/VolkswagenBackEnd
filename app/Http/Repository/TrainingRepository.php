@@ -52,7 +52,7 @@ class TrainingRepository
         }catch(ModelNotFoundException){
             throw new Exception("Nenhum usuário encontrado");
         }
-        
+        dd($data);
         return $data;
     }
 
