@@ -33,7 +33,7 @@ class TrainingRepository
                     trainings.date, 
                     trainings.id, 
                     concessionaire_training_user.id AS pivot_id, 
-                    concessionaire.id AS concessionaire_date, 
+                    concessionaire.id AS concessionaire_id, 
                     concessionaire.fantasy_name,
                     address.street, 
                     address.number,
