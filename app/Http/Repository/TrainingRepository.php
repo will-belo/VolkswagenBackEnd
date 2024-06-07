@@ -20,8 +20,8 @@ class TrainingRepository
     {
         $data = $this->model->orderByDesc('id')
             ->with('concessionaires')
-            ->get()
-            ->limit(4);
+            ->take(4)
+            ->get();
         
         return $data;
     }
