@@ -16,7 +16,7 @@ class TrainingService
     public function getAllTrainings()
     {
         $data = $this->trainingRepo->all();
-
+dd($data);
         if($data->isNotEmpty()){
             return [
                 'data'   => $data,
