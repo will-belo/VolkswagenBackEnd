@@ -32,6 +32,7 @@ class TrainingRepository
                     trainings.name, 
                     trainings.date, 
                     trainings.id, 
+                    trainings.active, 
                     concessionaire_training_user.id AS pivot_id, 
                     concessionaire.id AS concessionaire_id, 
                     concessionaire.fantasy_name,
