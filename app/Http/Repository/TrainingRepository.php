@@ -18,7 +18,8 @@ class TrainingRepository
 
     public function all()
     {
-        $data = $this->model->with('concessionaires')
+        $data = $this->model->orderByDesc('id')
+            ->with('concessionaires')
             ->get();
         
         return $data;
