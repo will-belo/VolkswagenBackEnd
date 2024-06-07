@@ -16,7 +16,10 @@ class TrainingService
     public function getAllTrainings()
     {
         $data = $this->trainingRepo->all();
-dd(json_encode($data));
+        return [
+            'data'   => $data,
+            'status' => 200,
+        ];
         if($data->isNotEmpty()){
             return [
                 'data'   => $data,
