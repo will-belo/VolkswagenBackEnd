@@ -31,8 +31,8 @@ class Training extends Model
         return $this->belongsToMany(Concessionaire::class, 'concessionaire_training_user', 'trainings_id', 'concessionaire_id');
     }
 
-    public function concessionaireVacancies()
+    public function concessionaires()
     {
-        return $this->belongsToMany(Concessionaire::class, 'trainings_concessionaire', 'training_id', 'concessionaire_id');
+        return $this->belongsToMany(Concessionaire::class, 'trainings_concessionaire');
     }
 }
