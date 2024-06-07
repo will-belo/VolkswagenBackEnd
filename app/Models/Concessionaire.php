@@ -29,11 +29,6 @@ class Concessionaire extends Model
         return $this->belongsToMany(Training::class, 'concessionaire_training_user', 'concessionaire_id', 'trainings_id');
     }
 
-    public function training()
-    {
-        return $this->belongsToMany(Training::class, 'trainings_concessionaire');
-    }
-
     public function users()
     {
         return $this->belongsToMany(User::class, 'concessionaire_training_user', 'concessionaire_id', 'common_user_id');
