@@ -19,7 +19,7 @@ class SanitizeInputs
         if($request->has('born_at') && !empty($request->born_at)){
             $request->merge(['born_at' => Carbon::createFromFormat('d/m/Y', $request->born_at)->format('Y-m-d')]);
         }
-
+        /*
         if($request->has('cnpj')){
             $request->merge(['cnpj' => preg_replace('/\D/', '', $request->cnpj)]);
         }
@@ -43,7 +43,7 @@ class SanitizeInputs
         if($request->has('auto_repair_phone')){
             $request->merge(['auto_repair_phone' => preg_replace('/\D/', '', $request->auto_repair_phone)]);
         }
-
+        */
         return $next($request);
     }
 }

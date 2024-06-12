@@ -125,15 +125,17 @@ class AccessService
         ];
     }
 
-    public function verifyLegacy(Request $request)
+    public function verifySituation(Request $request)
     {
         $data = $this->userRepo->search('document', $request->document);
         
-        if($data->isNotEmpty() && $data->first()->user_login_id == null){
-            return true;
+        if($data->isEmpty()){
+            return 0;
+        }else if($data->first()->user_login_id == null){
+            return 1;
+        }else{
+            return 2;
         }
-        
-        return false;
     }
 
     public function createAddress(Request $request)
