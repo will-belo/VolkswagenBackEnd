@@ -20,7 +20,7 @@ class ValidateSituationHandler extends AbstractHandler
                 $return = false;
                 break;
             case 2:
-                return response()->json('Usuário já Cadastrado!', 201);
+                return response()->json('Usuário já Cadastrado!', 400);
                 break;
         }
 
