@@ -21,10 +21,11 @@ class AddressRepository implements AddressRepositoryInterface
     public function create($value, $foreign_key = null)
     {
         $record = $this->model->create([
-            'cep'     => $value['cep'],
-            'street'  => $value['street'],
-            'number'  => $value['number'],
-            'city_id' => $foreign_key
+            'cep'        => $value['cep'],
+            'street'     => $value['street'],
+            'number'     => $value['number'],
+            'complement' => $value['complement'],
+            'city_id'    => $foreign_key
         ]);
 
         return $record->id;

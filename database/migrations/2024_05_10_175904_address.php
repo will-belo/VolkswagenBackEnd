@@ -28,6 +28,7 @@ return new class extends Migration
             $table->id();
             $table->string('street');
             $table->string('number');
+            $table->string('complement')->nullable();
             $table->string('cep');
             $table->timestamps();
             $table->foreignId('city_id')->constrained(

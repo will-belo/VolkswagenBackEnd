@@ -145,9 +145,10 @@ class AccessService
         $city_ID  = $this->address->ifExistCity($request->city, $state_ID);
 
         $data = [
-            'cep'    => $request->cep,
-            'street' => $request->street,
-            'number' => $request->number,
+            'cep'        => $request->cep,
+            'street'     => $request->street,
+            'number'     => $request->number,
+            'complement' => $request->complement,
         ];
 
         try{
