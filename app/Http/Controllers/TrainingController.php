@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\TrainingService;
+use App\Services\UserService;
 use App\Traits\Response;
 
 class TrainingController extends Controller
@@ -11,7 +12,8 @@ class TrainingController extends Controller
     use Response;
 
     public function __construct(
-        protected TrainingService $service
+        protected TrainingService $service,
+        protected UserService $userService
     ){}
 
     /**
@@ -29,7 +31,9 @@ class TrainingController extends Controller
      */
     public function exib(string $id)
     {
-        $data = $this->service->getAllTrainingsById($id);
+        $userId = $this->userService->allInfos($id);
+        
+        $data = $this->service->getAllTrainingsById($userId->id);
         
         return $this->response($data);
     }
