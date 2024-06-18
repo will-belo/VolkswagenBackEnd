@@ -23,7 +23,7 @@ class Training extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'concessionaire_training_user', 'trainings_id', 'common_user_id')->withPivot('id');
+        return $this->belongsToMany(User::class, 'concessionaire_training_user', 'trainings_id', 'common_user_id')->withPivot(['id', 'concessionaire_id']);
     }
 
     public function concessionaire()

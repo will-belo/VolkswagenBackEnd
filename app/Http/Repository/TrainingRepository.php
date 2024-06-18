@@ -18,10 +18,27 @@ class TrainingRepository
 
     public function all()
     {
+        $data = $this->model->all();
+
+        return $data;
+    }
+
+    public function last()
+    {
         $data = $this->model->orderByDesc('id')
             ->with('concessionaires.address.city.state')
             ->take(4)
             ->get();
+        
+        return $data;
+    }
+
+    public function usersSubscribed($id)
+    {
+        $data = $this->model->where('id', $id)
+            ->with('users')
+            ->get()
+            ->first();
         
         return $data;
     }

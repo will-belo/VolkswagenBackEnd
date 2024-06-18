@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Adapter\EmailSenderAdapter;
 use App\Models\City;
 use App\Models\User;
 use App\Models\State;
@@ -18,6 +19,8 @@ use App\Http\Repository\AutoRepairRepository;
 use App\Interfaces\AutoRepairRepositoryInterface;
 use App\Models\AutoRepair;
 use App\Models\AutoRepairUSer;
+use App\Services\EmailAdapterImplements;
+use App\Services\RdStationService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -45,7 +48,7 @@ class AppServiceProvider extends ServiceProvider
             return new AddressRepository($app->make(Address::class));
         });
 
-        $this->app->bind(AddressService::class, function ($app) {
+        $this->app->bind(AddressService::class, function($app){
             return new AddressService(
                 $app->make('StateRepository'),
                 $app->make('CityRepository'),
@@ -59,6 +62,10 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(SinglePassService::class, function(){
             return new SinglePassService();
+        });
+
+        $this->app->bind(EmailSenderAdapter::class, function($app){
+            return new EmailAdapterImplements(new RdStationService());
         });
     }
 

@@ -12,10 +12,17 @@ class TrainingService
     public function __construct(
         protected TrainingRepository $trainingRepo,
     ){}
+
+    public function getTrainings()
+    {
+        $data = $this->trainingRepo->all();
+
+        return $data;
+    }
     
     public function getAllTrainings()
     {
-        $data = $this->trainingRepo->all();
+        $data = $this->trainingRepo->last();
         
         if($data->isNotEmpty()){
             return [
@@ -28,6 +35,13 @@ class TrainingService
             'data'   => 'Nenhum treinamento encontrado',
             'status' => 404
         ];
+    }
+
+    public function getTrainingUsers(string $id)
+    {
+        $data = $this->trainingRepo->usersSubscribed($id);
+
+        return $data;
     }
 
     public function getAllTrainingsById($id)
