@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Adapter\EmailSenderAdapter;
+use Illuminate\Http\Request;
 
 class EmailAdapterImplements implements EmailSenderAdapter
 {
@@ -10,7 +11,7 @@ class EmailAdapterImplements implements EmailSenderAdapter
         protected RdStationService $service
     ){}
 
-    public function send(string $endpoint, array $data, string $options = '')
+    public function send(string $endpoint, Request $data, string $options = '')
     {
         return $this->service->send($endpoint, $data, $options);
     }
