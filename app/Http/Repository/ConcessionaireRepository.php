@@ -20,7 +20,10 @@ class ConcessionaireRepository
                 $query->where('value', $state);
             });
         })
-        ->with(['trainingVacancies', 'address.city.state'])
+        ->with('trainingVacancies', function ($query) use ($id) {
+            $query->where('training_id', $id);
+        })
+        ->with('address.city.state')
         ->get();
         
         return $data;
