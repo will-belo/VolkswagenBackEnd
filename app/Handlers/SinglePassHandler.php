@@ -16,6 +16,7 @@ class SinglePassHandler extends AbstractHandler
         }
 
         $context['singlePassId'] = $singlePassID['iD'];
+        $context['singlePassToken'] = $singlePassID['token'];
         
         return parent::handle($request, $service, $context);
     }

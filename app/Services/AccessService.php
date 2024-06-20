@@ -185,7 +185,8 @@ class AccessService
 
         return [
             'status'  => true,
-            'iD' => $response
+            'iD' => $response->user_id,
+            'token' => $response->token
         ];
     }
 
