@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Adapter\EmailSenderAdapter;
 use App\Models\City;
 use App\Models\User;
 use App\Models\State;
@@ -62,10 +61,6 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(SinglePassService::class, function(){
             return new SinglePassService();
-        });
-
-        $this->app->bind(EmailSenderAdapter::class, function($app){
-            return new EmailAdapterImplements(new RdStationService());
         });
     }
 
