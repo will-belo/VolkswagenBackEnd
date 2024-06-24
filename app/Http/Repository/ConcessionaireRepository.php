@@ -9,6 +9,13 @@ class ConcessionaireRepository
         protected Concessionaire $model,
     ){}
 
+    public function getInfos($id)
+    {
+        $data = $this->model->find($id)->with('address')->get(); // Retornar endereço
+
+        return $data;
+    }
+
     public function getByAddress($state, $city, $id)
     {
         $data = $this->model->whereHas('trainingVacancies', function ($query) use ($id) {

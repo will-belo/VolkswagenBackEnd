@@ -3,39 +3,49 @@
 
 namespace App\Services;
 
-use App\Adapter\EmailSenderAdapter;
 use Illuminate\Support\Facades\Http;
 
 class RdStationService
 {
+    private $token;
+    private $params;
+
     public function __construct(
-        private $url = "https://api.rd.services", // 
-        private $token = ''
+        private $url = "https://api.rd.services",
     ){}
 
-    public function config()
+    public function getToken()
     {
         $data = Http::asForm()->post("{$this->url}/auth/token", [
             'client_id' => '26a3266f-c022-449c-b91e-c10ed7f23d8d',
             'client_secret' => '08bffb4411764945a5f1ee4566fa875e',
             'refresh_token' => 'wAZ1wfzM1NpWsXyxNZL9_t9jIJD4hVRa2U6X1ledx1k',
-        ]);
+        ])->object();
 
-        $this->token = $data;
+        $this->token = $data->access_token;
     }
 
-    public function send($endpoint, $data, $options)
+    public function params(array $data = [])
     {
-        $this->config();
-
-        $params = [
-            'legal_bases' => [ 
+        $params = [ 
+            [
                 'category' => 'communications',
-                'type' => 'legitimate_interest',
+                'type' => 'consent',
                 'status' => 'granted' 
             ]
         ];
         
-        Http::withToken($this->token)->asForm()->patch("{$endpoint}/email:{$options}", $data);
+        $data['legal_bases'] = $params;
+
+        $this->params = $data;
+    }
+
+    public function post(string $endpoint, string $options)
+    {
+        $this->getToken();
+        
+        $response = Http::withToken($this->token)->patch("{$this->url}{$endpoint}/email:{$options}", $this->params);
+
+        dd($this->params);
     }
 }

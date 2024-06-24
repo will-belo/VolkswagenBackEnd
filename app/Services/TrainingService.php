@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Http\Repository\TrainingRepository;
+use App\Models\Concessionaire;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;

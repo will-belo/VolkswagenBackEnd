@@ -13,6 +13,11 @@ class ConcessionaireService
         protected ConcessionaireRepository $concessionaireRepo,
         protected TrainingUser $vacanciesCount
     ){}
+
+    public function find(int $id)
+    {
+        return $this->concessionaireRepo->getInfos($id);
+    }
     
     public function getConcessionaireByAddress(Request $request)
     {

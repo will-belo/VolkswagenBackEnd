@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SendNotificationEvent;
+use App\Services\ConcessionaireService;
 use Illuminate\Http\Request;
 use App\Services\TrainingService;
 use App\Services\UserService;
+use App\Traits\GenerateParamsNotification;
 use App\Traits\Response;
 
 class TrainingController extends Controller
 {
-    use Response;
+    use Response, GenerateParamsNotification;
 
     public function __construct(
         protected TrainingService $service,
-        protected UserService $userService
+        protected UserService $userService,
+        protected ConcessionaireService $concessionaireService,
     ){}
 
     /**
@@ -51,9 +55,17 @@ class TrainingController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $this->service->saveTrainingUser($request);
+        /*$data = $this->service->saveTrainingUser($request);*/
 
-        return $this->response($data);
+        $concessionaire = $this->concessionaireService->find($request->concessionaireId);
+
+        /*if($data['status'] == 201){*/
+            $params = $this->trainingCreate($request->trainingId, $concessionaire);
+
+            SendNotificationEvent::dispatch($this->userService->allInfos($request->userId)->email, $params);
+        //}
+
+        //return $this->response($data);
     }
 
     /**
