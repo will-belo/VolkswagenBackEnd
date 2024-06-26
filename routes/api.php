@@ -44,5 +44,6 @@ Route::middleware(JwtMiddleware::class)->group(function () {
     Route::prefix('manager')->group(function () {
         Route::get('/trainings/{concessionaireId}', [ConcessionaireAreaController::class, 'getTrainings']);
         Route::get('/users', [ConcessionaireAreaController::class, 'getUserOnTraining']);
+        Route::patch('/updatePresence', [ConcessionaireAreaController::class, 'updatePresence']);
     });
 });
