@@ -23,6 +23,16 @@ class TrainingRepository
         return $data;
     }
 
+    public function especifyConcessionaire($id)
+    {
+        $data = $this->model->with(['concessionaire' => function ($query) use ($id) {
+            $query->where('concessionaire_id', $id);
+        }])
+        ->get();
+
+        return $data;
+    }
+
     public function last()
     {
         $data = $this->model->orderByDesc('id')

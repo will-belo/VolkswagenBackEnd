@@ -55,17 +55,17 @@ class TrainingController extends Controller
      */
     public function store(Request $request)
     {
-        /*$data = $this->service->saveTrainingUser($request);*/
+        $data = $this->service->saveTrainingUser($request);
 
-        $concessionaire = $this->concessionaireService->find($request->concessionaireId);
+        /*$concessionaire = $this->concessionaireService->find($request->concessionaireId);
 
-        /*if($data['status'] == 201){*/
+        if($data['status'] == 201){
             $params = $this->trainingCreate($request->trainingId, $concessionaire);
 
             SendNotificationEvent::dispatch($this->userService->allInfos($request->userId)->email, $params);
-        //}
+        }*/
 
-        //return $this->response($data);
+        return $this->response($data);
     }
 
     /**

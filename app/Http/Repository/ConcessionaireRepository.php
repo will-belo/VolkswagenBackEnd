@@ -9,9 +9,23 @@ class ConcessionaireRepository
         protected Concessionaire $model,
     ){}
 
+    public function all()
+    {
+        $data = $this->model->all();
+
+        return $data;
+    }
+
     public function getInfos($id)
     {
-        $data = $this->model->find($id)->with('address')->get(); // Retornar endereço
+        $data = $this->model->find($id); // Retornar endereço
+        
+        return $data;
+    }
+
+    public function getBySinglePassId($id)
+    {
+        $data = $this->model->where('concessionaire_login_id', $id)->get()->first();
 
         return $data;
     }
