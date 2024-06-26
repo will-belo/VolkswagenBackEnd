@@ -28,6 +28,7 @@ class TrainingRepository
         $data = $this->model->with(['concessionaire' => function ($query) use ($id) {
             $query->where('concessionaire_id', $id);
         }])
+        ->orderByDesc('active')
         ->get();
 
         return $data;
