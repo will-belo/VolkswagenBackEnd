@@ -16,6 +16,13 @@ class TrainingRepository
         protected TrainingUser $modelFK
     ){}
 
+    public function unique(string $id)
+    {
+        $data = $this->model->find($id);
+
+        return $data;  
+    }
+
     public function all()
     {
         $data = $this->model->all();

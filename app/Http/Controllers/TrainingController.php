@@ -73,7 +73,9 @@ class TrainingController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $training = $this->service->getTraining($id);
+
+        return $this->response($training);
     }
 
     /**
