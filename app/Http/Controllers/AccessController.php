@@ -76,7 +76,9 @@ class AccessController extends Controller
         }catch(\Exception $error){
             DB::rollBack();
 
-            return response()->json($error->getMessage(), 500);
+            return response()->json([
+                'message' => $error->getMessage()
+            ], 500);
         }
     }
 }
